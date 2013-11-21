@@ -10,20 +10,44 @@
 
 void copy(double angle,long int height,long int width,HIPL_IMAGE *it,HIPL_IMAGE *ot,char *argv)
 {
+long int x;
+long int y;
 int max,i,j;
+//long int hwidth = width / 2;
+//long int hheight = height / 2;
 do {
+//for(x = 0; x < height; x++) {
+//for(y = 0; y < width; y++) {
+//long int xt = x - hwidth;
+//long int yt = y - hheight;
+//double sinma = sin(-angle);
+//double cosma = cos(-angle);
+//long int xs = (int)round((cosma * xt - sinma * yt) + hwidth);
+//long int ys = (int)round((sinma * xt + cosma * yt) + hheight);
+		
+
 if ((max = HIPL_Getpart(it)) < 0) {
 fprintf(stderr, "Error in reading image\n");
 exit(1);
 }
  for (i=0; i<max; i++)
  for (j=0; j<it->img.COLS; j++)
- ot->iarr[i][j] = it->iarr[i][j];
+//if(xs >= 0 && xs < width && ys >= 0 && ys < height) {
+ot->iarr[x][y] = it->iarr[x][y];
+//} else {
+//ot->iarr[x][y] = 0;
+
+//}
+ 
+
  if ((i = HIPL_Putpart(ot)) < 0) {
  fprintf(stderr, "Error in writing image\n");
  exit(1);
  }
+//}
+//}
  } while (ot->P.nleft > 0);
+
 HIPL_StoreResult(argv,ot);
 
 }
@@ -62,7 +86,7 @@ ot->iarr[x][y] = it->iarr[x][y];
 //HIPL_StoreResult(argv,ot);
 }
 }
-writeOutput(ot,argv);
+//writeOutput(ot,argv);
 }
 
 
@@ -86,8 +110,8 @@ HIPL_Refresh(it,0);
 long int nrow=it->img.ROWS;
 long int ncol=it->img.COLS;
 double angle=2*(3.147/180);
-//rotate(angle,nrow,ncol,it,ot,argv[2]);
-copy(it,ot,argv[2]);
+copy(angle,nrow,ncol,it,ot,argv[2]);
+//copy(it,ot,argv[2]);
 printf("total row %ld \n",nrow);
 
 
